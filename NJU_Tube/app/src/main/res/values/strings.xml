@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">NJU Tube</string>
+    <string name="usernameInputHint">用户名</string>
+    <string name="SignInInfo">登陆到\n NJU TUBE</string>
+    <string name="loginBtn_text">登陆</string>
+    <string name="doNotLoginWithBelowMsg">NJU Tube不支持以下几种登陆方式</string>
+    <string name="passwordInputHint">密码</string>
+
+    <string name="nju_tube_register_title">注册 NJU Tube 账号</string>
+    <string name="sign_up_btn_text">注册</string>
+    <string name="confirm_password_hint">确认密码</string>
+    <string name="forgot_message">忘记用户名或密码？</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="home_fragment_text">Home Fragment</string>
+    <string name="explore_fragment_text">Explore Fragment</string>
+    <string name="favorites_fragment_text">Favorites Fragment</string>
+    <string name="subscription_fragment_text">Subscription Fragment</string>
+    <string name="publish_fragment_text">Publish Fragment</string>
+    <string name="history_text">历史记录</string>
+    <string name="recent_text">最近观看</string>
+</resources>

@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/signIn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="50dp"
+        android:layout_marginBottom="0dp"
+        android:fontFamily="sans-serif"
+        android:gravity="center"
+        android:text="@string/SignInInfo"
+        android:textSize="40sp"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/username"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/signIn"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="0dp"
+        android:autofillHints=""
+        android:background="#30FFFFFF"
+        android:drawableStart="@drawable/ic_baseline_person_24"
+        android:drawablePadding="20dp"
+        android:hapticFeedbackEnabled="false"
+        android:hint="@string/usernameInputHint"
+        android:padding="20dp"
+        android:inputType="text" />
+
+    <EditText
+        android:id="@+id/password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/username"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
+        android:autofillHints=""
+        android:background="#30FFFFFF"
+        android:drawableStart="@drawable/ic_baseline_password_24"
+        android:drawablePadding="20dp"
+        android:hint="@string/passwordInputHint"
+        android:padding="20dp"
+        android:inputType="textPassword" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/loginButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/password"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
+        android:backgroundTint="@color/design_default_color_on_secondary"
+        android:text="@string/loginBtn_text" />
+
+    <TextView
+        android:id="@+id/forgotPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/forgot_message"
+        android:textStyle="italic"
+        android:textSize="11sp"
+        android:layout_below="@id/loginButton"
+        android:layout_centerHorizontal="true"
+        />
+
+    <TextView
+        android:id="@+id/newUser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="注册新用户"
+        android:textStyle="italic"
+        android:textSize="11sp"
+        android:layout_marginTop="10sp"
+        android:layout_below="@id/forgotPassword"
+        android:layout_centerHorizontal="true"
+        />
+
+
+    <TextView
+        android:id="@+id/doNotLoginWith"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/doNotLoginIcons"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+
+        android:layout_marginBottom="0dp"
+        android:gravity="center"
+        android:text="@string/doNotLoginWithBelowMsg"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:id="@+id/doNotLoginIcons"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp"
+
+        >
+        <ImageView
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/baidu"
+            android:layout_margin="10dp"
+            />
+        <ImageView
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/wechat"
+            android:layout_margin="10dp"
+            />
+        <ImageView
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/google"
+            android:layout_margin="10dp"
+            />
+
+    </LinearLayout>
+
+</RelativeLayout>

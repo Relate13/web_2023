@@ -38,6 +38,10 @@ public class VideoItemAdapter extends RecyclerView.Adapter<VideoItemViewHolder> 
         });
     }
 
+    public VideoItem getVideoItem(int pos) {
+        return items.get(pos);
+    }
+
     @NonNull
     @Override
     public VideoItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -49,7 +53,7 @@ public class VideoItemAdapter extends RecyclerView.Adapter<VideoItemViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull VideoItemViewHolder holder, int position) {
-        // 设置ui对应位置的文字与图片，暂时不能设置图片
+        // 设置ui对应位置的文字与图片
         Glide.with(this.fragment).load(items.get(position).getCoverUrl()).into(holder.thumbnail);
         holder.title.setText(items.get(position).getVideoTitle());
         holder.uploader.setText(items.get(position).getAuthor().getName());

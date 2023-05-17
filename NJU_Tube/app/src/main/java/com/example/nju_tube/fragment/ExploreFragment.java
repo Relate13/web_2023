@@ -6,7 +6,6 @@ import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -116,7 +115,13 @@ public class ExploreFragment extends Fragment implements RecyclerViewInterface {
     @Override
     public void OnItemClick(int pos) {
         Intent intent = new Intent(getContext(), VideoPlayActivity.class);
+        VideoItem curItem = videoItemAdapter.getVideoItem(pos);
+        intent.putExtra("VideoTitle", curItem.getVideoTitle());
+        intent.putExtra("VideoURL", curItem.getVideoUrl());
+        intent.putExtra("VideoDate", curItem.getUploadDate());
+        intent.putExtra("Author", curItem.getAuthor().getName());
+        intent.putExtra("Likes", curItem.getFavoriteCount());
+        intent.putExtra("CommentNum", curItem.getCommentCount());
         startActivity(intent);
-        Toast.makeText(getContext(),itemList.get(pos).getVideoTitle(),Toast.LENGTH_SHORT).show();
     }
 }

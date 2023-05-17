@@ -26,4 +26,7 @@
     <string name="success_login">登录成功</string>
     <string name="fail_login">登录失败</string>
     <string name="forget_toast">我们由衷地感到遗憾</string>
+    <string name="default_title">Polar Bears</string>
+    <string name="default_date">2023年13月32日</string>
+    <string name="default_author">CloudCreator</string>
 </resources>

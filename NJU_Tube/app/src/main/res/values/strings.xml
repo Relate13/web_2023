@@ -6,6 +6,9 @@
     <string name="doNotLoginWithBelowMsg">NJU Tube不支持以下几种登陆方式</string>
     <string name="passwordInputHint">密码</string>
 
+    <string name="server_url">http://10.0.2.2:8080</string>
+    <string name="feed_url">/tube/feed/</string>
+
     <string name="nju_tube_register_title">注册 NJU Tube 账号</string>
     <string name="sign_up_btn_text">注册</string>
     <string name="confirm_password_hint">确认密码</string>
@@ -19,4 +22,8 @@
     <string name="publish_fragment_text">Publish Fragment</string>
     <string name="history_text">历史记录</string>
     <string name="recent_text">最近观看</string>
+
+    <string name="success_login">登录成功</string>
+    <string name="fail_login">登录失败</string>
+    <string name="forget_toast">我们由衷地感到遗憾</string>
 </resources>

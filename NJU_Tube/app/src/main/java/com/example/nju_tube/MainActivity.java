@@ -1,12 +1,12 @@
 package com.example.nju_tube;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.button.MaterialButton;
 
@@ -27,13 +27,14 @@ public class MainActivity extends AppCompatActivity {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // 登录判断
                 if(username.getText().toString().equals("admin")&&password.getText().toString().equals("admin")){
-                    Toast.makeText(getApplicationContext(),"登陆成功",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(),getString(R.string.success_login),Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(MainActivity.this,HomePage.class);
                     startActivity(intent);
 
                 }else{
-                    Toast.makeText(getApplicationContext(),"登陆失败，请检查用户名与密码",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), getString(R.string.fail_login),Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -45,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
         forgot.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getApplicationContext(),"我们由衷地感到遗憾",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(),getString(R.string.forget_toast),Toast.LENGTH_SHORT).show();
             }
         });
 

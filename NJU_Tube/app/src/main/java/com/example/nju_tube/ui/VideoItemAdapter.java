@@ -1,12 +1,15 @@
 package com.example.nju_tube.ui;
 
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.nju_tube.R;
 
 import java.util.List;
@@ -19,9 +22,20 @@ public class VideoItemAdapter extends RecyclerView.Adapter<VideoItemViewHolder> 
 
     RecyclerViewInterface recyclerViewInterface;
 
-    public VideoItemAdapter(List<VideoItem> items, RecyclerViewInterface recyclerViewInterface) {
+    Fragment fragment;
+
+    public VideoItemAdapter(Fragment fragment, List<VideoItem> items, RecyclerViewInterface recyclerViewInterface) {
+        this.fragment = fragment;
         this.recyclerViewInterface=recyclerViewInterface;
         this.items=items;
+    }
+
+    public void addData(List<VideoItem> newItems, Handler mainThreadHandler) {
+        mainThreadHandler.post(() -> {
+            int oldItemsSize = this.items.size();
+            this.items.addAll(newItems);
+            this.notifyItemRangeInserted(oldItemsSize, newItems.size());
+        });
     }
 
     @NonNull
@@ -36,13 +50,15 @@ public class VideoItemAdapter extends RecyclerView.Adapter<VideoItemViewHolder> 
     @Override
     public void onBindViewHolder(@NonNull VideoItemViewHolder holder, int position) {
         // 设置ui对应位置的文字与图片，暂时不能设置图片
+        Glide.with(this.fragment).load(items.get(position).getCoverUrl()).into(holder.thumbnail);
         holder.title.setText(items.get(position).getVideoTitle());
-        holder.uploader.setText(items.get(position).getUploader());
-        holder.time.setText(items.get(position).getDate());
+        holder.uploader.setText(items.get(position).getAuthor().getName());
+        holder.time.setText(items.get(position).getUploadDate());
     }
 
     @Override
     public int getItemCount() {
         return items.size();
     }
+
 }

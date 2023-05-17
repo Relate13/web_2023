@@ -2,6 +2,7 @@ package com.example.nju_tube.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,9 +15,20 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.nju_tube.R;
 import com.example.nju_tube.VideoPlayActivity;
 import com.example.nju_tube.ui.RecyclerViewInterface;
+import com.example.nju_tube.ui.UserItem;
 import com.example.nju_tube.ui.VideoItem;
 import com.example.nju_tube.ui.VideoItemAdapter;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,6 +36,7 @@ import java.util.List;
 public class ExploreFragment extends Fragment implements RecyclerViewInterface {
     /** 视频列表 */
     List<VideoItem> itemList=new ArrayList<>();
+    VideoItemAdapter videoItemAdapter;
     public ExploreFragment() {
         // Required empty public constructor
     }
@@ -39,24 +52,64 @@ public class ExploreFragment extends Fragment implements RecyclerViewInterface {
         RecyclerView recyclerView = view.findViewById(R.id.recyclerview_explore);
         // 设置布局
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        // 获取/生成视频清单
-        generateVideoList();
-        // 把清单内容填充到列表中
-        recyclerView.setAdapter(new VideoItemAdapter(itemList,this));
+
+        videoItemAdapter = new VideoItemAdapter(this, itemList, this);
+        // 设置Adapter
+        recyclerView.setAdapter(videoItemAdapter);
+
+        // 获取生成视频清单
+        final Handler handler = new Handler(); // 主线程Handler 用于更新RecyclerView
+        Thread videoListThread = new Thread(()->generateVideoList(handler));
+        videoListThread.start(); // 另开线程进行网络请求
 
         return view;
     }
 
-    public void generateVideoList(){
-        itemList=new ArrayList<>();
-        itemList.add(new VideoItem("AAAA","123","2012.1.1"));
-        itemList.add(new VideoItem("BB","321","2022.1.1"));
-        itemList.add(new VideoItem("CCCC","daw","2023.1.1"));
-        itemList.add(new VideoItem("DDD","awe","2021.2.1"));
-        itemList.add(new VideoItem("EEEE","sdfe","2015.1.1"));
-        itemList.add(new VideoItem("EEEE","eerder","2015.1.1"));
-        itemList.add(new VideoItem("EEEE","eercadaer","2015.1.1"));
-        itemList.add(new VideoItem("EEEE","ee23123rer","2015.1.1"));
+    public void generateVideoList(Handler handler){
+        List<VideoItem> newVideos = new ArrayList<>();
+        String serverUrl = getString(R.string.server_url);
+        String feedUrl = serverUrl+getString(R.string.feed_url);
+        try {
+            // 通过网络请求获得视频列表json数据
+            // TODO: 服务端返回的视频列表可能不全（返回的是最新的若干个视频），因此一次请求可能无法获得所有视频信息
+            HttpURLConnection connection = (HttpURLConnection) new URL(feedUrl).openConnection();
+            connection.setConnectTimeout(5000);
+            connection.setRequestMethod("GET");
+            InputStream is = connection.getInputStream();
+            byte[] data = readInputStream(is);
+
+            // 解析视频列表
+            JSONObject jsonObject = new JSONObject(new String(data, StandardCharsets.UTF_8));
+            JSONArray videoList = jsonObject.getJSONArray("video_list");
+            for (int i=0; i<videoList.length(); ++i) {
+                // 处理视频信息并使其转换为VideoItem对象
+                JSONObject rawVideoItem = videoList.getJSONObject(i);
+                JSONObject rawUserItem = rawVideoItem.getJSONObject("author");
+                UserItem userItem = new UserItem((int) rawUserItem.get("id"), (String) rawUserItem.get("name"));
+                String uploadDate = (String) rawVideoItem.get("upload_date");
+                String[] splitDate = uploadDate.split("-"); // 服务端返回的日期类似于2023-5-17-22-00
+                uploadDate = splitDate[0]+"年"+splitDate[1]+"月"+splitDate[2]+"日"+" "+splitDate[3]+":"+splitDate[4]; // 重新格式化日期字符串
+
+                VideoItem videoItem = new VideoItem((int) rawVideoItem.get("id"), serverUrl+rawVideoItem.get("play_url"),
+                        serverUrl+rawVideoItem.get("cover_url"), (String) rawVideoItem.get("title"), userItem,
+                        uploadDate, (int) rawVideoItem.get("favorite_count"),
+                        (int) rawVideoItem.get("comment_count"), (Boolean) rawVideoItem.get("is_favorite"));
+                newVideos.add(videoItem);
+            }
+            videoItemAdapter.addData(newVideos, handler); // 更新数据到View
+        }
+        catch (IOException | JSONException ignored) {}
+    }
+
+    public static byte[] readInputStream(InputStream inStream) throws IOException {
+        ByteArrayOutputStream outStream = new ByteArrayOutputStream();
+        byte[] buffer = new byte[1024];
+        int len;
+        while ((len = inStream.read(buffer)) != -1) {
+            outStream.write(buffer, 0, len);
+        }
+        inStream.close();
+        return outStream.toByteArray();
     }
 
     // 列表的点击事件

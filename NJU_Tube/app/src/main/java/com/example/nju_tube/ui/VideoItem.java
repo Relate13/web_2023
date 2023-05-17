@@ -3,47 +3,75 @@ package com.example.nju_tube.ui;
 /** 视频信息对象，用于填充列表，包含视频的粗略信息 */
 
 public class VideoItem {
-    public VideoItem(String videoTitle, String uploader, String date) {
+    private final int id;
+    private final String videoUrl;
+    private final String coverUrl;
+    private final String videoTitle;
+    private final UserItem author;
+    private final String uploadDate;
+    private int favoriteCount;
+    private int commentCount;
+    private boolean isFavorite;
+
+    public VideoItem(int id, String videoUrl, String coverUrl, String videoTitle, UserItem author,
+                     String uploadDate, int favoriteCount, int commentCount, boolean isFavorite) {
+        this.id = id;
+        this.videoUrl = videoUrl;
+        this.coverUrl = coverUrl;
         this.videoTitle = videoTitle;
-        this.uploader = uploader;
-        this.date = date;
+        this.author = author;
+        this.uploadDate = uploadDate;
+
+        this.favoriteCount = favoriteCount;
+        this.commentCount = commentCount;
+        this.isFavorite = isFavorite;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getVideoUrl() {
+        return videoUrl;
+    }
+
+    public String getCoverUrl() {
+        return coverUrl;
     }
 
     public String getVideoTitle() {
         return videoTitle;
     }
 
-    public void setVideoTitle(String videoTitle) {
-        this.videoTitle = videoTitle;
+    public UserItem getAuthor() {
+        return author;
     }
 
-    String videoTitle = "test";
-
-    public String getUploader() {
-        return uploader;
+    public String getUploadDate() {
+        return uploadDate;
     }
 
-    public void setUploader(String uploader) {
-        this.uploader = uploader;
+    public int getFavoriteCount() {
+        return favoriteCount;
     }
 
-    public String getDate() {
-        return date;
+    public void setFavoriteCount(int favoriteCount) {
+        this.favoriteCount = favoriteCount;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public int getCommentCount() {
+        return commentCount;
     }
 
-    public String getUrl() {
-        return url;
+    public void setCommentCount(int commentCount) {
+        this.commentCount = commentCount;
     }
 
-    public void setUrl(String url) {
-        this.url = url;
+    public boolean isFavorite() {
+        return isFavorite;
     }
 
-    String uploader = "test";
-    String date = "test";
-    String url = "secret";
+    public void setFavorite(boolean favorite) {
+        isFavorite = favorite;
+    }
 }

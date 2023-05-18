@@ -3,31 +3,31 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:title="主页"
+        android:title="@string/home_item"
         android:id="@+id/nju_tube_home"
         android:icon="@drawable/ic_baseline_home_24"
         app:showAsAction="ifRoom"
         />
     <item
-        android:title="探索"
+        android:title="@string/explore_item"
         android:id="@+id/explore"
         android:icon="@drawable/ic_baseline_explore_24"
         app:showAsAction="ifRoom"
         />
     <item
-        android:title="发布"
+        android:title="@string/publish_item"
         android:id="@+id/publish"
         android:icon="@drawable/ic_baseline_publish_24"
         app:showAsAction="ifRoom"
         />
     <item
-        android:title="订阅"
+        android:title="@string/subscribe_item"
         android:id="@+id/subscription"
         android:icon="@drawable/ic_baseline_subscriptions_24"
         app:showAsAction="ifRoom"
         />
     <item
-        android:title="收藏"
+        android:title="@string/like_item"
         android:id="@+id/favorites"
         android:icon="@drawable/ic_baseline_favorite_24"
         app:showAsAction="ifRoom"

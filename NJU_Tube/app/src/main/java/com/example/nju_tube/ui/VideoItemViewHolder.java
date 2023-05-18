@@ -13,10 +13,10 @@ import com.example.nju_tube.R;
 
 public class VideoItemViewHolder extends RecyclerView.ViewHolder {
     // 需要暴露给外界的ui控件
-    ImageView thumbnail;
-    TextView title;
-    TextView uploader;
-    TextView time;
+    final ImageView thumbnail;
+    final TextView title;
+    final TextView uploader;
+    final TextView time;
     public VideoItemViewHolder(@NonNull View itemView, RecyclerViewInterface recyclerViewInterface) {
         super(itemView);
         // 获取各ui控件，以便适配器填充列表时修改
@@ -26,15 +26,12 @@ public class VideoItemViewHolder extends RecyclerView.ViewHolder {
         time=itemView.findViewById(R.id.time_stamp);
 
         // 设置监听事件
-        itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // 绑定至传入的接口对象，这个对象理论上应该就是外部的ExploreFragment对象，我们的点击事件在对应Fragment中有处理
-                if(recyclerViewInterface!=null){
-                    int pos=getAdapterPosition();
-                    if(pos!= RecyclerView.NO_POSITION){
-                        recyclerViewInterface.OnItemClick(pos);
-                    }
+        itemView.setOnClickListener(view -> {
+            // 绑定至传入的接口对象，这个对象理论上应该就是外部的ExploreFragment对象，我们的点击事件在对应Fragment中有处理
+            if(recyclerViewInterface!=null){
+                int pos=getAdapterPosition();
+                if(pos!= RecyclerView.NO_POSITION){
+                    recyclerViewInterface.OnItemClick(pos);
                 }
             }
         });

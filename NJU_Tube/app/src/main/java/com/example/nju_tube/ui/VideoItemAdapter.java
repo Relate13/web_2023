@@ -18,11 +18,11 @@ import java.util.List;
 
 public class VideoItemAdapter extends RecyclerView.Adapter<VideoItemViewHolder> {
 
-    List<VideoItem> items;
+    final List<VideoItem> items;
 
-    RecyclerViewInterface recyclerViewInterface;
+    final RecyclerViewInterface recyclerViewInterface;
 
-    Fragment fragment;
+    final Fragment fragment;
 
     public VideoItemAdapter(Fragment fragment, List<VideoItem> items, RecyclerViewInterface recyclerViewInterface) {
         this.fragment = fragment;

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -13,6 +12,10 @@
 
         <VideoView
             android:id="@+id/video_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <ImageView
+            android:id="@+id/cover_image_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     </FrameLayout>
@@ -48,6 +51,7 @@
                 android:textColor="@color/black"
                 android:textSize="15sp"
                 android:textStyle="normal" />
+
             <TextView
                 android:id="@+id/video_info_uploader"
                 android:layout_width="wrap_content"
@@ -62,10 +66,9 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:orientation="horizontal"
             android:layout_alignParentEnd="true"
-            >
+            android:layout_centerVertical="true"
+            android:orientation="horizontal">
 
             <ImageView
                 android:layout_width="48dp"
@@ -81,33 +84,30 @@
         </LinearLayout>
 
     </RelativeLayout>
+
     <LinearLayout
         android:id="@+id/divider"
-        android:layout_below="@id/video_info"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center">
+        android:layout_below="@id/video_info"
+        android:gravity="center"
+        android:orientation="horizontal">
+
         <View
             android:layout_width="match_parent"
             android:layout_height="2dp"
             android:layout_margin="5dp"
-            android:background="@android:color/darker_gray"
-            />
+            android:background="@android:color/darker_gray" />
     </LinearLayout>
 
     <TextView
-        android:layout_centerHorizontal="true"
-        android:layout_below="@id/divider"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="评论(0条)"
+        android:layout_below="@id/divider"
+        android:layout_centerHorizontal="true"
+        android:text="@string/comment_hint"
         android:textSize="25sp"
-        android:textStyle="normal"
-        />
-
-
-
+        android:textStyle="normal" />
 
 
 </RelativeLayout>

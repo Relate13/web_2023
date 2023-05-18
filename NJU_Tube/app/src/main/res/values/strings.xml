@@ -29,4 +29,14 @@
     <string name="default_title">Polar Bears</string>
     <string name="default_date">2023年13月32日</string>
     <string name="default_author">CloudCreator</string>
+    <string name="comment_hint">评论(0条)</string>
+    <string name="appbar_title">NJU Tube</string>
+    <string name="register_text">注册新用户</string>
+    <string name="home_item">主页</string>
+    <string name="explore_item">探索</string>
+    <string name="publish_item">发布</string>
+    <string name="subscribe_item">订阅</string>
+    <string name="like_item">收藏</string>
+    <string name="notification">Notification</string>
+    <string name="account">Account</string>
 </resources>

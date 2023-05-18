@@ -34,7 +34,7 @@ import java.util.List;
 /** 探索 页面 */
 public class ExploreFragment extends Fragment implements RecyclerViewInterface {
     /** 视频列表 */
-    List<VideoItem> itemList=new ArrayList<>();
+    final List<VideoItem> itemList=new ArrayList<>();
     VideoItemAdapter videoItemAdapter;
     public ExploreFragment() {
         // Required empty public constructor
@@ -119,6 +119,7 @@ public class ExploreFragment extends Fragment implements RecyclerViewInterface {
         intent.putExtra("VideoTitle", curItem.getVideoTitle());
         intent.putExtra("VideoURL", curItem.getVideoUrl());
         intent.putExtra("VideoDate", curItem.getUploadDate());
+        intent.putExtra("CoverURL", curItem.getCoverUrl());
         intent.putExtra("Author", curItem.getAuthor().getName());
         intent.putExtra("Likes", curItem.getFavoriteCount());
         intent.putExtra("CommentNum", curItem.getCommentCount());

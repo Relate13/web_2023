@@ -11,6 +11,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.nju_tube.HttpUtils;
+import com.example.nju_tube.NJUTube;
 import com.example.nju_tube.R;
 import com.example.nju_tube.VideoPlayActivity;
 import com.example.nju_tube.ui.RecyclerViewInterface;
@@ -22,14 +24,13 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /** 探索 页面 */
 public class ExploreFragment extends Fragment implements RecyclerViewInterface {
@@ -68,6 +69,7 @@ public class ExploreFragment extends Fragment implements RecyclerViewInterface {
         List<VideoItem> newVideos = new ArrayList<>();
         String serverUrl = getString(R.string.server_url);
         String feedUrl = serverUrl+getString(R.string.feed_url);
+        feedUrl += "?token="+((NJUTube)(Objects.requireNonNull(getActivity()).getApplication())).getToken();
         try {
             // 通过网络请求获得视频列表json数据
             // TODO: 服务端返回的视频列表可能不全（返回的是最新的若干个视频），因此一次请求可能无法获得所有视频信息
@@ -75,10 +77,10 @@ public class ExploreFragment extends Fragment implements RecyclerViewInterface {
             connection.setConnectTimeout(5000);
             connection.setRequestMethod("GET");
             InputStream is = connection.getInputStream();
-            byte[] data = readInputStream(is);
+            JSONObject jsonObject = HttpUtils.readInputStream(is);
+            connection.disconnect();
 
             // 解析视频列表
-            JSONObject jsonObject = new JSONObject(new String(data, StandardCharsets.UTF_8));
             JSONArray videoList = jsonObject.getJSONArray("video_list");
             for (int i=0; i<videoList.length(); ++i) {
                 // 处理视频信息并使其转换为VideoItem对象
@@ -98,17 +100,6 @@ public class ExploreFragment extends Fragment implements RecyclerViewInterface {
             videoItemAdapter.addData(newVideos, handler); // 更新数据到View
         }
         catch (IOException | JSONException ignored) {}
-    }
-
-    public static byte[] readInputStream(InputStream inStream) throws IOException {
-        ByteArrayOutputStream outStream = new ByteArrayOutputStream();
-        byte[] buffer = new byte[1024];
-        int len;
-        while ((len = inStream.read(buffer)) != -1) {
-            outStream.write(buffer, 0, len);
-        }
-        inStream.close();
-        return outStream.toByteArray();
     }
 
     // 列表的点击事件

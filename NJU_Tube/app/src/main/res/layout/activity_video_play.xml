@@ -9,15 +9,18 @@
         android:id="@+id/video_view_frame"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+<!--        android:layout_height="wrap_content"-->
 
         <VideoView
             android:id="@+id/video_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
+
         <ImageView
             android:id="@+id/cover_image_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
+
     </FrameLayout>
 
     <RelativeLayout
@@ -25,13 +28,14 @@
         android:id="@+id/video_info"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
+        android:gravity="start"
         android:orientation="horizontal">
 
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp">
+            android:layout_margin="10dp"
+            >
 
             <TextView
                 android:id="@+id/video_info_title"
@@ -62,27 +66,6 @@
                 android:textSize="15sp"
                 android:textStyle="italic" />
         </RelativeLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:layout_margin="3dp"
-                android:src="@drawable/ic_baseline_favorite_border_24" />
-
-            <ImageView
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:layout_margin="3dp"
-                android:src="@drawable/ic_baseline_add_comment_24" />
-        </LinearLayout>
-
     </RelativeLayout>
 
     <LinearLayout
@@ -105,9 +88,60 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/divider"
         android:layout_centerHorizontal="true"
+        android:id="@+id/comment_hint"
         android:text="@string/comment_hint"
         android:textSize="25sp"
         android:textStyle="normal" />
 
+    <LinearLayout
+        android:id="@+id/divider2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/comment_hint"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_margin="5dp"
+            android:background="@android:color/darker_gray" />
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_below="@id/divider2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/comment_list_frame"
+        />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/like"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:layout_marginStart="6dp"
+        android:layout_marginTop="6dp"
+        android:layout_marginEnd="6dp"
+        android:layout_marginBottom="6dp"
+        android:contentDescription="like"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:src="@drawable/ic_baseline_favorite_border_24" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/new_comment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:layout_marginStart="6dp"
+        android:layout_marginTop="6dp"
+        android:layout_marginEnd="6dp"
+        android:layout_marginBottom="6dp"
+        android:layout_above="@+id/like"
+        android:layout_alignParentEnd="true"
+        android:contentDescription="new_comment"
+
+        android:src="@drawable/ic_baseline_add_comment_24" />
 
 </RelativeLayout>

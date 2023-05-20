@@ -11,8 +11,12 @@ import android.widget.TextView;
 import android.widget.VideoView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.bumptech.glide.Glide;
+import com.example.nju_tube.fragment.CommentFragment;
+import com.example.nju_tube.fragment.ExploreFragment;
 
 /** 视频播放页面 */
 public class VideoPlayActivity extends AppCompatActivity {
@@ -48,5 +52,15 @@ public class VideoPlayActivity extends AppCompatActivity {
         MediaController controller = new MediaController(this);
         videoView.setMediaController(controller);
         controller.setAnchorView(videoView);
+
+        // set comment
+
+        CommentFragment commentFragment = new CommentFragment();
+        setCommentFragment(commentFragment);
+    }
+    private void setCommentFragment(Fragment fragment) {
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.comment_list_frame, fragment);
+        fragmentTransaction.commit();
     }
 }

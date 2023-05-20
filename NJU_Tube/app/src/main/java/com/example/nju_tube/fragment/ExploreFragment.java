@@ -107,6 +107,7 @@ public class ExploreFragment extends Fragment implements RecyclerViewInterface {
     public void OnItemClick(int pos) {
         Intent intent = new Intent(getContext(), VideoPlayActivity.class);
         VideoItem curItem = videoItemAdapter.getVideoItem(pos);
+        intent.putExtra("VideoID", curItem.getId());
         intent.putExtra("VideoTitle", curItem.getVideoTitle());
         intent.putExtra("VideoURL", curItem.getVideoUrl());
         intent.putExtra("VideoDate", curItem.getUploadDate());

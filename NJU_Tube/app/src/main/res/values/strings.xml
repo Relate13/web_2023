@@ -11,6 +11,8 @@
     <string name="login_url">/tube/user/login/</string>
     <string name="register_url">/tube/user/register/</string>
     <string name="upload_url">/tube/publish/action/</string>
+    <string name="comment_list">/tube/comment/list/</string>
+    <string name="comment_action">/tube/comment/action/</string>
 
     <string name="nju_tube_register_title">注册 NJU Tube 账号</string>
     <string name="sign_up_btn_text">注册</string>
@@ -56,4 +58,13 @@
     <string name="cancel_upload_btn">算了</string>
     <string name="cancel_upload_toast">取消上传</string>
     <string name="cancel_select_hint">请选择要上传的视频</string>
+    <string name="cannot_get_comment">评论加载失败</string>
+    <string name="new_comment">new_comment</string>
+    <string name="like">like</string>
+    <string name="comment_title">写点什么</string>
+    <string name="comment_sure">发送</string>
+    <string name="comment_cancel">算了</string>
+    <string name="no_blank_comment">评论不能为空~</string>
+    <string name="comment_fail">评论失败</string>
+    <string name="comment_success">评论成功</string>
 </resources>

@@ -55,7 +55,7 @@ public class CommentItemAdapter extends RecyclerView.Adapter<CommentItemViewHold
         // 设置ui对应位置的文字与图片
         holder.commentContent.setText(items.get(position).getCommentContent());
         holder.commentTimeStamp.setText(items.get(position).getCommentTimeStamp());
-        holder.commentUserID.setText(items.get(position).getCommentUserID());
+        holder.commentUserID.setText(items.get(position).getCommentUserName());
     }
 
     @Override

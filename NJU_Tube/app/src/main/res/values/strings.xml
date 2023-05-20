@@ -6,10 +6,11 @@
     <string name="doNotLoginWithBelowMsg">NJU Tube不支持以下几种登陆方式</string>
     <string name="passwordInputHint">密码</string>
 
-    <string name="server_url">http://10.0.2.2:8080</string>
+    <string name="server_url">http://192.168.3.99:8080</string>
     <string name="feed_url">/tube/feed/</string>
     <string name="login_url">/tube/user/login/</string>
     <string name="register_url">/tube/user/register/</string>
+    <string name="upload_url">/tube/publish/action/</string>
 
     <string name="nju_tube_register_title">注册 NJU Tube 账号</string>
     <string name="sign_up_btn_text">注册</string>
@@ -46,4 +47,13 @@
     <string name="register_success">注册成功，正在跳转到主页</string>
     <string name="user_exists">用户名已存在，请直接登录或换一个用户名</string>
     <string name="register_token_fail">注册成功，但服务器生成Token时出现了错误，请再次登录</string>
+    <string name="upload_fail">上传失败</string>
+    <string name="upload_success">上传成功</string>
+    <string name="something_wrong">出现了一些问题…</string>
+    <string name="make_title_hint">给你的视频取个标题吧~</string>
+    <string name="take_it">就这个</string>
+    <string name="no_blank">标题不能为空~</string>
+    <string name="cancel_upload_btn">算了</string>
+    <string name="cancel_upload_toast">取消上传</string>
+    <string name="cancel_select_hint">请选择要上传的视频</string>
 </resources>

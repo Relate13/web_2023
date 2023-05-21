@@ -121,8 +121,8 @@ public class ExploreFragment extends Fragment implements RecyclerViewInterface {
         intent.putExtra("Author", curItem.getAuthor().getName());
         intent.putExtra("Likes", curItem.getFavoriteCount());
         intent.putExtra("CommentNum", curItem.getCommentCount());
-        startActivity(intent);
-        getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.fake_anim);
 
+        intent.putExtra("likedThisVideo",curItem.isFavorite());
+        startActivity(intent);
     }
 }

@@ -25,12 +25,17 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 
-/** 视频播放页面 */
+/**
+ * 视频播放页面
+ */
 public class VideoPlayActivity extends AppCompatActivity {
     int vid;
     TextView commentCounter;
     ExoPlayer videoPlayer;
     Uri videoURL;
+    boolean likedThisVideo;
+
+    FloatingActionButton likeButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +72,31 @@ public class VideoPlayActivity extends AppCompatActivity {
         videoDate.setText(intent.getStringExtra("VideoDate"));
         TextView videoAuthor = findViewById(R.id.video_info_uploader);
         videoAuthor.setText(intent.getStringExtra("Author"));
+
+        likeButton = findViewById(R.id.like);
+
+        likedThisVideo = intent.getBooleanExtra("likedThisVideo", false);
+        // init like status here
+        updateLikeStatusFromServer();
+
+        likeButton.setOnClickListener(v -> {
+            if (likedThisVideo) {
+                likeButton.setImageResource(R.drawable.ic_baseline_favorite_border_24);
+                unlikeVideo();
+                likedThisVideo = false;
+            } else {
+                likeButton.setImageResource(R.drawable.ic_baseline_favorite_24);
+                likeVideo();
+                likedThisVideo = true;
+            }
+        });
+    }
+
+    private void updateLikeButton(){
+        if (likedThisVideo)
+            likeButton.setImageResource(R.drawable.ic_baseline_favorite_24);
+        else
+            likeButton.setImageResource(R.drawable.ic_baseline_favorite_border_24);
     }
 
     private void initPlayer() {
@@ -99,14 +129,15 @@ public class VideoPlayActivity extends AppCompatActivity {
                                 sendComment(vid, comment, mainHandler));
                         commentThread.start();
                     })
-                    .setNegativeButton(getString(R.string.comment_cancel), (dialog, id) -> {});
+                    .setNegativeButton(getString(R.string.comment_cancel), (dialog, id) -> {
+                    });
             AlertDialog dialog = builder.create();
             dialog.show();
         });
     }
 
     private void sendComment(int vid, String comment, Handler mainHandler) {
-        String commentURL = getString(R.string.server_url)+getString(R.string.comment_action);
+        String commentURL = getString(R.string.server_url) + getString(R.string.comment_action);
         try {
             HttpPostMultipart httpPostMultipart = new HttpPostMultipart(commentURL, "utf-8");
             httpPostMultipart.addFormField("token", ((NJUTube) getApplication()).getToken());
@@ -118,12 +149,10 @@ public class VideoPlayActivity extends AppCompatActivity {
             if (statusCode == 0) {
                 setCommentFragment(new CommentFragment(vid, commentCounter));
                 mainHandler.post(() -> Toast.makeText(this, getString(R.string.comment_success), Toast.LENGTH_SHORT).show());
-            }
-            else {
+            } else {
                 mainHandler.post(() -> Toast.makeText(this, getString(R.string.comment_fail), Toast.LENGTH_SHORT).show());
             }
-        }
-        catch (IOException | JSONException ignored) {
+        } catch (IOException | JSONException ignored) {
             mainHandler.post(() -> Toast.makeText(this, getString(R.string.comment_fail), Toast.LENGTH_SHORT).show());
         }
     }
@@ -132,5 +161,58 @@ public class VideoPlayActivity extends AppCompatActivity {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.comment_list_frame, fragment);
         fragmentTransaction.commit();
+    }
+
+    private void unlikeVideo() {
+        Thread unlikeThread = new Thread(() -> sendLike(false));
+        unlikeThread.start();
+        Toast.makeText(this, "取消点赞", Toast.LENGTH_SHORT).show();
+    }
+
+    private void likeVideo() {
+        Thread likeThread = new Thread(() -> sendLike(true));
+        likeThread.start();
+        Toast.makeText(this, "赞了这个视频", Toast.LENGTH_SHORT).show();
+    }
+
+    private void sendLike(boolean doLike) {
+        String likeURL = getString(R.string.server_url) + getString(R.string.like_action);
+        try {
+            HttpPostMultipart httpPostMultipart = new HttpPostMultipart(likeURL, "utf-8");
+            httpPostMultipart.addFormField("token", ((NJUTube) getApplication()).getToken());
+            httpPostMultipart.addFormField("video_id", String.valueOf(vid));
+            httpPostMultipart.addFormField("action_type", doLike ? "1" : "2");
+            httpPostMultipart.finish();
+        } catch (IOException ignored) {}
+    }
+
+    private void updateLikeStatusFromServer() {
+        Handler mainHandler = new Handler();
+        Thread updateLikeThread = new Thread(() -> {
+            String likeURL = getString(R.string.server_url) + getString(R.string.like_action);
+            try {
+                HttpPostMultipart httpPostMultipart = new HttpPostMultipart(likeURL, "utf-8");
+                httpPostMultipart.addFormField("token", ((NJUTube) getApplication()).getToken());
+                httpPostMultipart.addFormField("video_id", String.valueOf(vid));
+                httpPostMultipart.addFormField("action_type", "3");
+                JSONObject jsonObject = new JSONObject(httpPostMultipart.finish());
+                if (jsonObject.has("status_code")) {
+                    if (jsonObject.getInt("status_code") == 1) {
+                        // is liked
+                        mainHandler.post(() -> {
+                            likedThisVideo=true;
+                            updateLikeButton();
+                        });
+                    } else {
+                        mainHandler.post(() -> {
+                            likedThisVideo=false;
+                            updateLikeButton();
+                        });
+                    }
+                }
+            } catch (IOException | JSONException ignored) {
+            }
+        });
+        updateLikeThread.start();
     }
 }

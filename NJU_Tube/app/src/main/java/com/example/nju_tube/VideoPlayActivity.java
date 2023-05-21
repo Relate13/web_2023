@@ -1,25 +1,23 @@
 package com.example.nju_tube;
 
 import android.content.Intent;
-import android.media.MediaPlayer;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-import android.view.View;
 import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.MediaController;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.VideoView;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.bumptech.glide.Glide;
 import com.example.nju_tube.fragment.CommentFragment;
+import com.google.android.exoplayer2.ExoPlayer;
+import com.google.android.exoplayer2.MediaItem;
+import com.google.android.exoplayer2.ui.StyledPlayerView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.json.JSONException;
@@ -31,41 +29,57 @@ import java.io.IOException;
 public class VideoPlayActivity extends AppCompatActivity {
     int vid;
     TextView commentCounter;
+    ExoPlayer videoPlayer;
+    Uri videoURL;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_video_play);
-
-        VideoView videoView = findViewById(R.id.video_view);
-
         Intent intent = getIntent();
+        initVideoInfo(intent);
+
+        videoURL = Uri.parse(intent.getStringExtra("VideoURL"));
+
+        vid = intent.getIntExtra("VideoID", 0);
+        commentCounter = findViewById(R.id.comment_counter);
+        initComment();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        initPlayer();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        videoPlayer.release();
+        videoPlayer = null;
+    }
+
+    private void initVideoInfo(Intent intent) {
         TextView videoTitle = findViewById(R.id.video_info_title);
         videoTitle.setText(intent.getStringExtra("VideoTitle"));
         TextView videoDate = findViewById(R.id.video_info_date);
         videoDate.setText(intent.getStringExtra("VideoDate"));
         TextView videoAuthor = findViewById(R.id.video_info_uploader);
         videoAuthor.setText(intent.getStringExtra("Author"));
-        Uri uri = Uri.parse(intent.getStringExtra("VideoURL"));
-        videoView.setVideoURI(uri);
-        vid = intent.getIntExtra("VideoID", 0);
+    }
 
-        // 视频未播放时展示视频封面
-        ImageView coverView = findViewById(R.id.cover_image_view);
-        Glide.with(this).load(intent.getStringExtra("CoverURL")).into(coverView);
-        videoView.setOnPreparedListener(mp -> mp.setOnInfoListener((mp1, what, extra) -> {
-            //播放第一帧时设置图片消失
-            if (what == MediaPlayer.MEDIA_INFO_VIDEO_RENDERING_START)
-                coverView.setVisibility(View.GONE);
-            return true;
-        }));
+    private void initPlayer() {
+        StyledPlayerView videoView = findViewById(R.id.video_player_view);
+        videoPlayer = new ExoPlayer.Builder(this).build();
+        videoView.setPlayer(videoPlayer);
+        videoView.setBackgroundColor(Color.BLACK);
+        videoView.setControllerAutoShow(false);
+        videoPlayer.addMediaItem(MediaItem.fromUri(videoURL));
+        videoPlayer.prepare();
+    }
 
-        MediaController controller = new MediaController(this);
-        videoView.setMediaController(controller);
-        controller.setAnchorView(videoView);
-
-        // set comment
-        commentCounter = findViewById(R.id.comment_counter);
+    private void initComment() {
         setCommentFragment(new CommentFragment(vid, commentCounter));
 
         FloatingActionButton commentBtn = findViewById(R.id.new_comment);

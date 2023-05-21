@@ -1,147 +1,126 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".VideoPlayActivity">
 
-    <FrameLayout
-        android:id="@+id/video_view_frame"
+
+    <com.google.android.exoplayer2.ui.StyledPlayerView
+        android:id="@+id/video_player_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-<!--        android:layout_height="wrap_content"-->
+        android:layout_height="300dp"
+        app:resize_mode="fit" />
 
-        <VideoView
-            android:id="@+id/video_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <ImageView
-            android:id="@+id/cover_image_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-    </FrameLayout>
-
-    <RelativeLayout
-        android:layout_below="@id/video_view_frame"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/video_info"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="start"
-        android:orientation="horizontal">
+        android:layout_below="@id/video_player_view"
+        android:layout_margin="10dp">
 
-        <RelativeLayout
+        <TextView
+            android:id="@+id/video_info_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            >
+            android:text="@string/default_title"
+            android:textColor="@color/black"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@id/video_info_uploader"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/video_info_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/default_title"
-                android:textColor="@color/black"
-                android:textSize="25sp"
-                android:textStyle="bold" />
+        <TextView
+            android:id="@+id/video_info_uploader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/default_author"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:textStyle="normal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/video_info_date"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/video_info_title" />
 
-            <TextView
-                android:id="@+id/video_info_date"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/video_info_title"
-                android:text="@string/default_date"
-                android:textColor="@color/black"
-                android:textSize="15sp"
-                android:textStyle="normal" />
+        <TextView
+            android:id="@+id/video_info_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/default_date"
+            android:textColor="@color/black"
+            android:textSize="15sp"
+            android:textStyle="normal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/video_info_uploader"
+            app:layout_constraintTop_toTopOf="@id/video_info_uploader" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <TextView
-                android:id="@+id/video_info_uploader"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/video_info_date"
-                android:text="@string/default_author"
-                android:textColor="@color/black"
-                android:textSize="15sp"
-                android:textStyle="italic" />
-        </RelativeLayout>
-    </RelativeLayout>
-
-    <LinearLayout
+    <View
         android:id="@+id/divider"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="2dp"
         android:layout_below="@id/video_info"
-        android:gravity="center"
-        android:orientation="horizontal">
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:layout_margin="5dp"
-            android:background="@android:color/darker_gray" />
-    </LinearLayout>
+        android:layout_margin="5dp"
+        android:background="@android:color/darker_gray" />
 
     <TextView
+        android:id="@+id/comment_counter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/divider"
         android:layout_centerHorizontal="true"
-        android:id="@+id/comment_counter"
         android:text="@string/comment_hint"
         android:textSize="25sp"
         android:textStyle="normal" />
 
-    <LinearLayout
+    <View
         android:id="@+id/divider2"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="2dp"
         android:layout_below="@id/comment_counter"
-        android:gravity="center"
-        android:orientation="horizontal">
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:layout_margin="5dp"
-            android:background="@android:color/darker_gray" />
-    </LinearLayout>
+        android:layout_margin="5dp"
+        android:background="@android:color/darker_gray" />
 
     <FrameLayout
-        android:layout_below="@id/divider2"
+        android:id="@+id/comment_list_frame"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/comment_list_frame"
-        />
+        android:layout_below="@id/divider2" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/like"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
         android:layout_gravity="end|bottom"
         android:layout_marginStart="6dp"
         android:layout_marginTop="6dp"
         android:layout_marginEnd="6dp"
         android:layout_marginBottom="6dp"
         android:contentDescription="@string/like"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:src="@drawable/ic_baseline_favorite_border_24" />
+        android:src="@drawable/ic_baseline_favorite_border_24"
+        app:backgroundTint="#B3E5FC" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/new_comment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_above="@+id/like"
+        android:layout_alignParentEnd="true"
         android:layout_gravity="end|bottom"
         android:layout_marginStart="6dp"
         android:layout_marginTop="6dp"
         android:layout_marginEnd="6dp"
         android:layout_marginBottom="6dp"
-        android:layout_above="@+id/like"
-        android:layout_alignParentEnd="true"
         android:contentDescription="@string/new_comment"
 
-        android:src="@drawable/ic_baseline_add_comment_24" />
+        android:src="@drawable/ic_baseline_add_comment_24"
+        app:backgroundTint="#B3E5FC" />
 
 </RelativeLayout>

@@ -13,6 +13,8 @@
     <string name="upload_url">/tube/publish/action/</string>
     <string name="comment_list">/tube/comment/list/</string>
     <string name="comment_action">/tube/comment/action/</string>
+    <string name="my_uploads">/tube/publish/list/</string>
+    <string name="my_favorite">/tube/favorite/list/</string>
 
     <string name="nju_tube_register_title">注册 NJU Tube 账号</string>
     <string name="sign_up_btn_text">注册</string>
@@ -67,4 +69,5 @@
     <string name="no_blank_comment">评论不能为空~</string>
     <string name="comment_fail">评论失败</string>
     <string name="comment_success">评论成功</string>
+    <string name="my_videos">我发布的视频</string>
 </resources>

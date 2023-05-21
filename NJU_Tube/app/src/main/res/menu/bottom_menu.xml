@@ -21,15 +21,15 @@
         app:showAsAction="ifRoom"
         />
     <item
-        android:title="@string/subscribe_item"
-        android:id="@+id/subscription"
-        android:icon="@drawable/ic_baseline_subscriptions_24"
-        app:showAsAction="ifRoom"
-        />
-    <item
         android:title="@string/like_item"
         android:id="@+id/favorites"
         android:icon="@drawable/ic_baseline_favorite_24"
+        app:showAsAction="ifRoom"
+        />
+    <item
+        android:title="@string/about"
+        android:id="@+id/about"
+        android:icon="@drawable/baseline_info_24"
         app:showAsAction="ifRoom"
         />
 </menu>

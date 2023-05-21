@@ -77,7 +77,7 @@ public class HomePage extends AppCompatActivity {
             } else if (itemId == R.id.favorites) {
                 FavoritesFragment favoritesFragment = new FavoritesFragment();
                 SelectedFragment(favoritesFragment);
-            } else if (itemId == R.id.subscription) {
+            } else if (itemId == R.id.about) {
                 SubscriptionFragment subscriptionFragment = new SubscriptionFragment();
                 SelectedFragment(subscriptionFragment);
             }
@@ -207,10 +207,8 @@ public class HomePage extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int itemId = item.getItemId();
-        if (itemId == R.id.notification) {
-            Toast.makeText(getApplicationContext(), "notification", Toast.LENGTH_SHORT).show();
-        } else if (itemId == R.id.account) {
-            Toast.makeText(getApplicationContext(), "account", Toast.LENGTH_SHORT).show();
+        if (itemId == R.id.account) {
+            finish();
         } else {
             return super.onOptionsItemSelected(item);
         }

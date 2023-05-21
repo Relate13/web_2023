@@ -43,7 +43,7 @@
     <string name="home_item">主页</string>
     <string name="explore_item">探索</string>
     <string name="publish_item">发布</string>
-    <string name="subscribe_item">订阅</string>
+    <string name="about">关于</string>
     <string name="like_item">收藏</string>
     <string name="notification">Notification</string>
     <string name="account">Account</string>
@@ -71,4 +71,5 @@
     <string name="comment_fail">评论失败</string>
     <string name="comment_success">评论成功</string>
     <string name="my_videos">我发布的视频</string>
+    <string name="github_repo">https://github.com/Relate13/web_2023</string>
 </resources>

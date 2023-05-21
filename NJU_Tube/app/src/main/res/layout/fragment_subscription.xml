@@ -45,13 +45,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/cat" />
+                    android:src="@drawable/cloud_creator" />
             </androidx.cardview.widget.CardView>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Cloud-Creator"
+                android:textSize="20sp"
                 android:textStyle="bold" />
         </LinearLayout>
 
@@ -79,12 +80,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Relate13"
+                android:textSize="20sp"
                 android:textStyle="bold" />
         </LinearLayout>
 
     </LinearLayout>
 
     <TextView
+        android:id="@+id/developed_together"
         android:layout_centerHorizontal="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -93,6 +96,31 @@
         android:text="共同开发"
         android:textSize="50sp"
         android:textStyle="bold" />
+
+    <LinearLayout
+        android:gravity="center_vertical"
+        android:layout_marginTop="10dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/developed_together"
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/github"
+            android:padding="5dp"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/github_repo"
+            android:textStyle="italic"
+            android:autoLink="all"
+            />
+
+    </LinearLayout>
 
 
 </RelativeLayout>

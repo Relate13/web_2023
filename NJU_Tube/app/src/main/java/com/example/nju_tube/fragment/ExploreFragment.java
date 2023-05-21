@@ -122,5 +122,7 @@ public class ExploreFragment extends Fragment implements RecyclerViewInterface {
         intent.putExtra("Likes", curItem.getFavoriteCount());
         intent.putExtra("CommentNum", curItem.getCommentCount());
         startActivity(intent);
+        getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.fake_anim);
+
     }
 }

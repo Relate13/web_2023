@@ -75,7 +75,7 @@ public class HomePage extends AppCompatActivity {
                 Intent videoIntent = new Intent(Intent.ACTION_PICK, MediaStore.Video.Media.EXTERNAL_CONTENT_URI);
                 startActivityForResult(videoIntent, PICK_VIDEO_REQUEST);
             } else if (itemId == R.id.favorites) {
-                FavoritesFragment favoritesFragment = new FavoritesFragment();
+                FavoritesFragment favoritesFragment = new FavoritesFragment("somebody");
                 SelectedFragment(favoritesFragment);
             } else if (itemId == R.id.subscription) {
                 SubscriptionFragment subscriptionFragment = new SubscriptionFragment();

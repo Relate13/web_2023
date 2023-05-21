@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
             httpPostMultipart.addFormField("username", userName);
             httpPostMultipart.addFormField("password", passwd);
             JSONObject jsonObject = new JSONObject(httpPostMultipart.finish());
-            int statusCode = (int) jsonObject.get("status_code");
+            int statusCode = jsonObject.getJSONObject("response").getInt("status_code");
             if (statusCode != 0) {
                 return false;
             }

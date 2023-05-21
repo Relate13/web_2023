@@ -100,7 +100,7 @@ public class VideoPlayActivity extends AppCompatActivity {
             httpPostMultipart.addFormField("action_type", "1");
             httpPostMultipart.addFormField("comment_text", comment);
             JSONObject jsonObject = new JSONObject(httpPostMultipart.finish());
-            int statusCode = jsonObject.getJSONObject("Response").getInt("status_code");
+            int statusCode = jsonObject.getJSONObject("response").getInt("status_code");
             if (statusCode == 0) {
                 setCommentFragment(new CommentFragment(vid, commentCounter));
                 mainHandler.post(() -> Toast.makeText(this, getString(R.string.comment_success), Toast.LENGTH_SHORT).show());

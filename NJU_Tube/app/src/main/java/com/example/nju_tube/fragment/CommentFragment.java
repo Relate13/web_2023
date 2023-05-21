@@ -78,6 +78,11 @@ public class CommentFragment extends Fragment implements RecyclerViewInterface {
             JSONObject jsonObject = HttpUtils.readInputStream(is);
             connection.disconnect();
 
+            int statusCode = jsonObject.getJSONObject("response").getInt("status_code");
+            if (statusCode != 0) {
+                throw new IOException();
+            }
+
             if (!jsonObject.has("comment_list")) {
                 return;
             }

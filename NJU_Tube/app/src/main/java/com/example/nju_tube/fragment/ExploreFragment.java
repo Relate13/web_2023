@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -80,6 +81,11 @@ public class ExploreFragment extends Fragment implements RecyclerViewInterface {
             JSONObject jsonObject = HttpUtils.readInputStream(is);
             connection.disconnect();
 
+            int statusCode = jsonObject.getJSONObject("response").getInt("status_code");
+            if (statusCode != 0) {
+                handler.post(() -> Toast.makeText(getContext(), getString(R.string.something_wrong), Toast.LENGTH_SHORT).show());
+                return;
+            }
             // 解析视频列表
             JSONArray videoList = jsonObject.getJSONArray("video_list");
             for (int i=0; i<videoList.length(); ++i) {

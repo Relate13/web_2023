@@ -1,6 +1,8 @@
 package com.example.nju_tube.ui;
 
-/** 视频信息对象，用于填充列表，包含视频的粗略信息 */
+/**
+ * 视频信息对象，用于填充列表，包含视频的粗略信息
+ */
 
 public class VideoItem {
     private final int id;

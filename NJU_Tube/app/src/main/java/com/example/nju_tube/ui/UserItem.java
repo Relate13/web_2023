@@ -8,9 +8,11 @@ public class UserItem {
         this.id = id;
         this.name = name;
     }
+
     public long getId() {
         return id;
     }
+
     public String getName() {
         return this.name;
     }

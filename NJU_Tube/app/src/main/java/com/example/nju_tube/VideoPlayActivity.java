@@ -92,7 +92,7 @@ public class VideoPlayActivity extends AppCompatActivity {
         });
     }
 
-    private void updateLikeButton(){
+    private void updateLikeButton() {
         if (likedThisVideo)
             likeButton.setImageResource(R.drawable.ic_baseline_favorite_24);
         else
@@ -137,7 +137,7 @@ public class VideoPlayActivity extends AppCompatActivity {
     }
 
     private void sendComment(int vid, String comment, Handler mainHandler) {
-        String commentURL = getString(R.string.server_url) + getString(R.string.comment_action);
+        String commentURL = ((NJUTube) getApplication()).getServerURL() + getString(R.string.comment_action);
         try {
             HttpPostMultipart httpPostMultipart = new HttpPostMultipart(commentURL, "utf-8");
             httpPostMultipart.addFormField("token", ((NJUTube) getApplication()).getToken());
@@ -176,20 +176,21 @@ public class VideoPlayActivity extends AppCompatActivity {
     }
 
     private void sendLike(boolean doLike) {
-        String likeURL = getString(R.string.server_url) + getString(R.string.like_action);
+        String likeURL = ((NJUTube) getApplication()).getServerURL() + getString(R.string.like_action);
         try {
             HttpPostMultipart httpPostMultipart = new HttpPostMultipart(likeURL, "utf-8");
             httpPostMultipart.addFormField("token", ((NJUTube) getApplication()).getToken());
             httpPostMultipart.addFormField("video_id", String.valueOf(vid));
             httpPostMultipart.addFormField("action_type", doLike ? "1" : "2");
             httpPostMultipart.finish();
-        } catch (IOException ignored) {}
+        } catch (IOException ignored) {
+        }
     }
 
     private void updateLikeStatusFromServer() {
         Handler mainHandler = new Handler();
         Thread updateLikeThread = new Thread(() -> {
-            String likeURL = getString(R.string.server_url) + getString(R.string.like_action);
+            String likeURL = ((NJUTube) getApplication()).getServerURL() + getString(R.string.like_action);
             try {
                 HttpPostMultipart httpPostMultipart = new HttpPostMultipart(likeURL, "utf-8");
                 httpPostMultipart.addFormField("token", ((NJUTube) getApplication()).getToken());
@@ -200,12 +201,12 @@ public class VideoPlayActivity extends AppCompatActivity {
                     if (jsonObject.getInt("status_code") == 1) {
                         // is liked
                         mainHandler.post(() -> {
-                            likedThisVideo=true;
+                            likedThisVideo = true;
                             updateLikeButton();
                         });
                     } else {
                         mainHandler.post(() -> {
-                            likedThisVideo=false;
+                            likedThisVideo = false;
                             updateLikeButton();
                         });
                     }

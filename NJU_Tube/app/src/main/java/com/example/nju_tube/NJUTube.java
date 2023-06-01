@@ -7,6 +7,7 @@ public class NJUTube extends Application {
     private String token = "Invalid Token";
     private int userId = 0;
     private String userName = "";
+    private String serverURL = "";
 
     public void setToken(String token) {
         this.token = token;
@@ -30,5 +31,13 @@ public class NJUTube extends Application {
 
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+
+    public String getServerURL() {
+        return serverURL;
+    }
+
+    public void setServerURL(String serverURL) {
+        this.serverURL = serverURL;
     }
 }

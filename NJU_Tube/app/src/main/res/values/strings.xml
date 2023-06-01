@@ -71,5 +71,16 @@
     <string name="comment_fail">评论失败</string>
     <string name="comment_success">评论成功</string>
     <string name="my_videos">我发布的视频</string>
+    <string name="server_dialog_title">自定义服务器地址</string>
+    <string name="ok">确定</string>
+    <string name="cancel">取消</string>
+    <string name="server_no_blank">服务器地址不能为空</string>
     <string name="github_repo">https://github.com/Relate13/web_2023</string>
+    <string name="commenter">CloudCreator:</string>
+    <string name="comment">你所热爱的，就是你的生活😄</string>
+    <string name="current_user_hint">当前登录为</string>
+    <string name="about_title">本程序由</string>
+    <string name="cloud_creator">Cloud-Creator</string>
+    <string name="relate13">Relate13</string>
+    <string name="about_text">共同开发</string>
 </resources>

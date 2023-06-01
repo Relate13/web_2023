@@ -13,7 +13,6 @@ import android.provider.MediaStore;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -41,9 +40,6 @@ import java.util.Objects;
 
 public class HomePage extends AppCompatActivity {
 
-    private Toolbar toolbar;
-    private BottomNavigationView bottomNavigationView;
-    private FrameLayout frameLayout;
     private final int PICK_VIDEO_REQUEST = 1;
 
     @Override
@@ -52,15 +48,13 @@ public class HomePage extends AppCompatActivity {
         setContentView(R.layout.activity_home_page);
 
         //获取工具栏控件
-        toolbar = findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         //设置为程序的ActionBar
         setSupportActionBar(toolbar);
         //隐藏程序名称
         Objects.requireNonNull(getSupportActionBar()).setTitle("");
         //获取底部导航栏
-        bottomNavigationView = findViewById(R.id.bottom_navigation_bar);
-        //获取Frame显示区域布局
-        frameLayout = findViewById(R.id.frame_layout);
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation_bar);
         //为底部导航栏设置监听事件
         bottomNavigationView.setOnItemSelectedListener(item -> {
             int itemId = item.getItemId();
@@ -136,7 +130,7 @@ public class HomePage extends AppCompatActivity {
     }
 
     private void uploadVideo(File videoFile, String title, Handler mainHandler) {
-        String uploadURL = getString(R.string.server_url) + getString(R.string.upload_url);
+        String uploadURL = ((NJUTube) getApplication()).getServerURL() + getString(R.string.upload_url);
         try {
             HttpPostMultipart httpPostMultipart = new HttpPostMultipart(uploadURL, "utf-8");
             httpPostMultipart.addFormField("token", ((NJUTube) getApplication()).getToken());

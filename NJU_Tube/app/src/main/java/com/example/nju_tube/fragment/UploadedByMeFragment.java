@@ -21,14 +21,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class UploadedByMeFragment extends ExploreFragment{
+public class UploadedByMeFragment extends ExploreFragment {
     @Override
     public void generateVideoList(Handler handler) {
         List<VideoItem> newVideos = new ArrayList<>();
-        String serverUrl = getString(R.string.server_url);
-        String uploadListUrl = serverUrl+getString(R.string.my_uploads);
-        uploadListUrl += "?token="+((NJUTube)(Objects.requireNonNull(getActivity()).getApplication())).getToken();
-        uploadListUrl += "&user_id="+((NJUTube)(Objects.requireNonNull(getActivity()).getApplication())).getUserId();
+        String serverUrl = ((NJUTube) Objects.requireNonNull(getActivity()).getApplication()).getServerURL();
+        String uploadListUrl = serverUrl + getString(R.string.my_uploads);
+        uploadListUrl += "?token=" + ((NJUTube) (Objects.requireNonNull(getActivity()).getApplication())).getToken();
+        uploadListUrl += "&user_id=" + ((NJUTube) (Objects.requireNonNull(getActivity()).getApplication())).getUserId();
         try {
             // 通过网络请求获得视频列表json数据
             HttpURLConnection connection = (HttpURLConnection) new URL(uploadListUrl).openConnection();
@@ -45,23 +45,23 @@ public class UploadedByMeFragment extends ExploreFragment{
             }
             // 解析视频列表
             JSONArray videoList = jsonObject.getJSONArray("video_list");
-            for (int i=0; i<videoList.length(); ++i) {
+            for (int i = 0; i < videoList.length(); ++i) {
                 // 处理视频信息并使其转换为VideoItem对象
                 JSONObject rawVideoItem = videoList.getJSONObject(i);
                 JSONObject rawUserItem = rawVideoItem.getJSONObject("author");
                 UserItem userItem = new UserItem((int) rawUserItem.get("id"), (String) rawUserItem.get("name"));
                 String uploadDate = (String) rawVideoItem.get("upload_date");
                 String[] splitDate = uploadDate.split("-"); // 服务端返回的日期类似于2023-5-17-22-00
-                uploadDate = splitDate[0]+"年"+splitDate[1]+"月"+splitDate[2]+"日"+" "+splitDate[3]+":"+splitDate[4]; // 重新格式化日期字符串
+                uploadDate = splitDate[0] + "年" + splitDate[1] + "月" + splitDate[2] + "日" + " " + splitDate[3] + ":" + splitDate[4]; // 重新格式化日期字符串
 
-                VideoItem videoItem = new VideoItem((int) rawVideoItem.get("id"), serverUrl+rawVideoItem.get("play_url"),
-                        serverUrl+rawVideoItem.get("cover_url"), (String) rawVideoItem.get("title"), userItem,
+                VideoItem videoItem = new VideoItem((int) rawVideoItem.get("id"), serverUrl + rawVideoItem.get("play_url"),
+                        serverUrl + rawVideoItem.get("cover_url"), (String) rawVideoItem.get("title"), userItem,
                         uploadDate, (int) rawVideoItem.get("favorite_count"),
                         (int) rawVideoItem.get("comment_count"), (Boolean) rawVideoItem.get("is_favorite"));
                 newVideos.add(videoItem);
             }
             videoItemAdapter.addData(newVideos, handler); // 更新数据到View
+        } catch (IOException | JSONException ignored) {
         }
-        catch (IOException | JSONException ignored) {}
     }
 }

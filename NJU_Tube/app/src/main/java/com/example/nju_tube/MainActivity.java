@@ -3,9 +3,11 @@ package com.example.nju_tube;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.button.MaterialButton;
@@ -22,6 +24,29 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         //requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main);
+
+        ((NJUTube) getApplication()).setServerURL(getString(R.string.server_url));
+        TextView mainTitle = findViewById(R.id.signIn);
+        mainTitle.setOnLongClickListener(view -> {
+            final EditText input = new EditText(this);
+            input.setText(((NJUTube) getApplication()).getServerURL());
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle(getString(R.string.server_dialog_title))
+                    .setView(input)
+                    .setPositiveButton(getString(R.string.ok), (dialog, id) -> {
+                        String newServer = input.getText().toString();
+                        if (newServer.isBlank()) {
+                            Toast.makeText(this, getString(R.string.server_no_blank), Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                        ((NJUTube) getApplication()).setServerURL(newServer);
+                    })
+                    .setNegativeButton(getString(R.string.cancel), (dialog, id) -> {
+                    });
+            AlertDialog dialog = builder.create();
+            dialog.show();
+            return true;
+        });
 
         // 获取用户名与密码文本控件
         TextView username = findViewById(R.id.username);
@@ -45,29 +70,29 @@ public class MainActivity extends AppCompatActivity {
 
         // 设置忘记密码事件
         TextView forgot = findViewById(R.id.forgotPassword);
-        forgot.setOnClickListener(view -> Toast.makeText(getApplicationContext(),getString(R.string.forget_toast),Toast.LENGTH_SHORT).show());
+        forgot.setOnClickListener(view -> Toast.makeText(getApplicationContext(), getString(R.string.forget_toast), Toast.LENGTH_SHORT).show());
 
         // 设置用户注册事件
         TextView newUser = findViewById(R.id.newUser);
         newUser.setOnClickListener(view -> {
-            Intent intent = new Intent(MainActivity.this,SignUpPage.class);
+            Intent intent = new Intent(MainActivity.this, SignUpPage.class);
             startActivity(intent);
         });
     }
 
     private void userLoginSuccess() {
-        Toast.makeText(getApplicationContext(),getString(R.string.success_login)+", "+
-                ((NJUTube) getApplication()).getUserName(),Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent(MainActivity.this,HomePage.class);
+        Toast.makeText(getApplicationContext(), getString(R.string.success_login) + ", " +
+                ((NJUTube) getApplication()).getUserName(), Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(MainActivity.this, HomePage.class);
         startActivity(intent);
     }
 
     private void userLoginFail() {
-        Toast.makeText(getApplicationContext(), getString(R.string.fail_login),Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), getString(R.string.fail_login), Toast.LENGTH_SHORT).show();
     }
 
     private boolean userLogin(String userName, String passwd) {
-        String loginURL = getString(R.string.server_url)+getString(R.string.login_url);
+        String loginURL = ((NJUTube) getApplication()).getServerURL() + getString(R.string.login_url);
         try {
             HttpPostMultipart httpPostMultipart = new HttpPostMultipart(loginURL, "utf-8");
             httpPostMultipart.addFormField("username", userName);
@@ -84,8 +109,7 @@ public class MainActivity extends AppCompatActivity {
             ((NJUTube) getApplication()).setToken(token);
             ((NJUTube) getApplication()).setUserName(userName);
             return true;
-        }
-        catch (IOException | JSONException ignored) {
+        } catch (IOException | JSONException ignored) {
             return false;
         }
     }

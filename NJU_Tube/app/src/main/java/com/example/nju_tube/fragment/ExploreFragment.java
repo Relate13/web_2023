@@ -33,11 +33,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-/** 探索 页面 */
+/**
+ * 探索 页面
+ */
 public class ExploreFragment extends Fragment implements RecyclerViewInterface {
-    /** 视频列表 */
-    final List<VideoItem> itemList=new ArrayList<>();
+    /**
+     * 视频列表
+     */
+    final List<VideoItem> itemList = new ArrayList<>();
     VideoItemAdapter videoItemAdapter;
+
     public ExploreFragment() {
         // Required empty public constructor
     }
@@ -60,17 +65,17 @@ public class ExploreFragment extends Fragment implements RecyclerViewInterface {
 
         // 获取生成视频清单
         final Handler handler = new Handler(); // 主线程Handler 用于更新RecyclerView
-        Thread videoListThread = new Thread(()->generateVideoList(handler));
+        Thread videoListThread = new Thread(() -> generateVideoList(handler));
         videoListThread.start(); // 另开线程进行网络请求
 
         return view;
     }
 
-    public void generateVideoList(Handler handler){
+    public void generateVideoList(Handler handler) {
         List<VideoItem> newVideos = new ArrayList<>();
-        String serverUrl = getString(R.string.server_url);
-        String feedUrl = serverUrl+getString(R.string.feed_url);
-        feedUrl += "?token="+((NJUTube)(Objects.requireNonNull(getActivity()).getApplication())).getToken();
+        String serverUrl = ((NJUTube) Objects.requireNonNull(getActivity()).getApplication()).getServerURL();
+        String feedUrl = serverUrl + getString(R.string.feed_url);
+        feedUrl += "?token=" + ((NJUTube) (Objects.requireNonNull(getActivity()).getApplication())).getToken();
         try {
             // 通过网络请求获得视频列表json数据
             // TODO: 服务端返回的视频列表可能不全（返回的是最新的若干个视频），因此一次请求可能无法获得所有视频信息
@@ -88,24 +93,24 @@ public class ExploreFragment extends Fragment implements RecyclerViewInterface {
             }
             // 解析视频列表
             JSONArray videoList = jsonObject.getJSONArray("video_list");
-            for (int i=0; i<videoList.length(); ++i) {
+            for (int i = 0; i < videoList.length(); ++i) {
                 // 处理视频信息并使其转换为VideoItem对象
                 JSONObject rawVideoItem = videoList.getJSONObject(i);
                 JSONObject rawUserItem = rawVideoItem.getJSONObject("author");
                 UserItem userItem = new UserItem((int) rawUserItem.get("id"), (String) rawUserItem.get("name"));
                 String uploadDate = (String) rawVideoItem.get("upload_date");
                 String[] splitDate = uploadDate.split("-"); // 服务端返回的日期类似于2023-5-17-22-00
-                uploadDate = splitDate[0]+"年"+splitDate[1]+"月"+splitDate[2]+"日"+" "+splitDate[3]+":"+splitDate[4]; // 重新格式化日期字符串
+                uploadDate = splitDate[0] + "年" + splitDate[1] + "月" + splitDate[2] + "日" + " " + splitDate[3] + ":" + splitDate[4]; // 重新格式化日期字符串
 
-                VideoItem videoItem = new VideoItem((int) rawVideoItem.get("id"), serverUrl+rawVideoItem.get("play_url"),
-                        serverUrl+rawVideoItem.get("cover_url"), (String) rawVideoItem.get("title"), userItem,
+                VideoItem videoItem = new VideoItem((int) rawVideoItem.get("id"), serverUrl + rawVideoItem.get("play_url"),
+                        serverUrl + rawVideoItem.get("cover_url"), (String) rawVideoItem.get("title"), userItem,
                         uploadDate, (int) rawVideoItem.get("favorite_count"),
                         (int) rawVideoItem.get("comment_count"), (Boolean) rawVideoItem.get("is_favorite"));
                 newVideos.add(videoItem);
             }
             videoItemAdapter.addData(newVideos, handler); // 更新数据到View
+        } catch (IOException | JSONException ignored) {
         }
-        catch (IOException | JSONException ignored) {}
     }
 
     // 列表的点击事件
@@ -122,7 +127,7 @@ public class ExploreFragment extends Fragment implements RecyclerViewInterface {
         intent.putExtra("Likes", curItem.getFavoriteCount());
         intent.putExtra("CommentNum", curItem.getCommentCount());
 
-        intent.putExtra("likedThisVideo",curItem.isFavorite());
+        intent.putExtra("likedThisVideo", curItem.isFavorite());
         startActivity(intent);
     }
 }

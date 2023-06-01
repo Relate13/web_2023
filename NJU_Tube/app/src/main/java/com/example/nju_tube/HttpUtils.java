@@ -26,8 +26,9 @@ public class HttpUtils {
 
     /**
      * Gets the corresponding path to a file from the given content:// URI
+     *
      * @param selectedVideoUri The content:// URI to find the file path from
-     * @param contentResolver The content resolver to use to perform the query.
+     * @param contentResolver  The content resolver to use to perform the query.
      * @return the file path as a string
      */
     public static String getFilePathFromContentUri(Uri selectedVideoUri, ContentResolver contentResolver) {

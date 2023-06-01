@@ -13,6 +13,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+
 public class SignUpPage extends AppCompatActivity {
 
     @Override
@@ -29,7 +30,7 @@ public class SignUpPage extends AppCompatActivity {
         String userName = ((EditText) findViewById(R.id.username)).getText().toString();
         String passwd = ((EditText) findViewById(R.id.password)).getText().toString();
         String confirmPasswd = ((EditText) findViewById(R.id.confirm_password)).getText().toString();
-        String registerURL = getString(R.string.server_url)+getString(R.string.register_url);
+        String registerURL = ((NJUTube) getApplication()).getServerURL() + getString(R.string.register_url);
 
         Handler mainHandler = new Handler();
 
@@ -54,12 +55,12 @@ public class SignUpPage extends AppCompatActivity {
                     ((NJUTube) getApplication()).setUserName(userName);
 
                     signUpSuccess(mainHandler);
+                } catch (IOException | JSONException ignored) {
+                    signUpFail(-1, mainHandler);
                 }
-                catch (IOException | JSONException ignored) { signUpFail(-1, mainHandler); }
             });
             registerThread.start();
-        }
-        else {
+        } else {
             signUpFail(-2, mainHandler);
         }
     }

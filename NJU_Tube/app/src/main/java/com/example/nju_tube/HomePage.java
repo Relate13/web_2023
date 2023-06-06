@@ -65,7 +65,6 @@ public class HomePage extends AppCompatActivity {
                 ExploreFragment exploreFragment = new ExploreFragment();
                 SelectedFragment(exploreFragment);
             } else if (itemId == R.id.publish) {
-                askPermission();
                 Intent videoIntent = new Intent(Intent.ACTION_PICK, MediaStore.Video.Media.EXTERNAL_CONTENT_URI);
                 startActivityForResult(videoIntent, PICK_VIDEO_REQUEST);
             } else if (itemId == R.id.favorites) {
@@ -98,10 +97,6 @@ public class HomePage extends AppCompatActivity {
                     ActivityCompat.requestPermissions(this,
                             new String[]{Manifest.permission.READ_MEDIA_VIDEO},
                             PICK_VIDEO_REQUEST);
-
-                    // MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE is an
-                    // app-defined int constant. The callback method gets the
-                    // result of the request.
                 }
             }
         } else {
@@ -120,10 +115,6 @@ public class HomePage extends AppCompatActivity {
                     ActivityCompat.requestPermissions(this,
                             new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
                             PICK_VIDEO_REQUEST);
-
-                    // MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE is an
-                    // app-defined int constant. The callback method gets the
-                    // result of the request.
                 }
             }
         }
@@ -152,6 +143,7 @@ public class HomePage extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         if (resultCode == RESULT_OK && data != null) {
             if (requestCode == PICK_VIDEO_REQUEST) {
+                askPermission();
                 final EditText input = new EditText(this);
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
                 builder.setTitle(getString(R.string.make_title_hint))
